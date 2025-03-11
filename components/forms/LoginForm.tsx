@@ -9,7 +9,7 @@ import SubmitButton from "../SubmitButton"
 import { useState } from "react"
 import { UserFormValidation } from "@/lib/validation"
 import { useRouter } from "next/navigation"
-import { createUser } from "@/lib/actions/patient.action"
+import { createUser } from "@/lib/actions/customer.action"
 
 export enum FormFieldType {
   INPUT = "input",
@@ -22,7 +22,7 @@ export enum FormFieldType {
 }
 
 
-const PatientForm = () => {
+const LoginForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   
@@ -56,7 +56,7 @@ const PatientForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 flex-1">
         <section className="mb-12 space-y-4">
           <h1 className="header text-cyan-400"> Welcome</h1>
-          <p className="text-dark-700">To Ayuniya Healthcare</p>
+          <p>Enter Details to Login</p>
         </section>
         
         <CustomFormField
@@ -93,4 +93,4 @@ const PatientForm = () => {
   )
 }
 
-export default PatientForm
+export default LoginForm

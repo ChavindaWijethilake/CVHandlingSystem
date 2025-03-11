@@ -1,77 +1,53 @@
-import Link from 'next/link'
+"use client";
+
+import Link from "next/link";
 import Image from "next/image";
-import { getAppointment } from '@/lib/actions/appointment.actions';
-import { Doctors } from '@/constants';
-import { formatDateTime } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import Chatbot from "@/components/Chatbot";
 
-const Success = async ({params: { userId }, searchParams }:SearchParamProps) => {
+const Success = () => {
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId") || "unknown-user";
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
-    const appointmentId = (searchParams?.appointmentId as string) || "";
-    const appointment = await getAppointment(appointmentId);
-    const doctor = Doctors.find((doc) => doc.name === appointment.primaryPhysician)
+  const handleRedirect = (path: string) => {
+    setIsLoading(true);
+    router.push(path);
+  };
 
   return (
-    <div className=" flex h-screen max-h-screen px-[5%]">
-        <div className="success-img">
-         <Link href="/">
-          <Image
-            src="/assets/icons/logo-full.jpeg"
-            height={1000}
-            width={1000}
-            alt="logo"
-            className="h-10 w-fit rounded-md"
-          />
-         </Link>
+    <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
+      
+      <Image src="/assets/gifs/success.gif" height={300} width={280} alt="success" />
+      
+      
+      <h2 className="header mt-6 text-green-500 text-2xl font-semibold">
+        Your CV Upload was Successful!
+      </h2>
+      <p className="text-gray-400 mt-2 text-lg">
+        Thank you for submitting your details. Our team will review your application shortly.
+      </p>
 
-         <section className="flex flex-col items-center">
-          <Image
-            src="/assets/gifs/success.gif"
-            height={300}
-            width={280}
-            alt="success"
-          />
-          <h2 className="header mb-6 max-w-[600px] text-center">
-            Your <span className="text-green-500">appointment request</span> has
-            been successfully submitted!
-          </h2>
-          <p>We&apos;ll be in touch shortly to confirm.</p>
-        </section>
-
-        <section className="request-details">
-          <p>Requested appointment details: </p>
-          <div className="flex items-center gap-3">
-            <Image
-              src={doctor?.image!}
-              alt="doctor"
-              width={100}
-              height={100}
-              className="size-6"
-            />
-            <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
-          </div>
-          <div className="flex gap-2">
-            <Image
-              src="/assets/icons/calendar.svg"
-              height={24}
-              width={24}
-              alt="calendar"
-            />
-            <p> {formatDateTime(appointment.schedule).dateTime}</p>
-          </div>
-        </section>
-
-        <Button variant="outline" className="shad-primary-btn" asChild>
-          <Link href={`/patients/${userId}/new-appointment`}>
-            New Appointment
+      
+      <div className="mt-6 flex flex-col gap-4 ">
+       
+        <Button className="shad-primary-btn" asChild>
+          <Link href={"/patients/new-appointment/register"}>
+            Back to Upload
           </Link>
         </Button>
-        
-        <p className="copyright">© Ayuniya</p>
-        
-        </div>
+        <Button className="shad-primary-btn" asChild>
+          <Link href={"/patients/${userid}/new-appointment/voiceassist"}>
+            Voice Assistant
+          </Link>
+        </Button>
+      </div>
+      <Chatbot />
     </div>
-  )
-}
+  );
+};
 
-export default Success
+export default Success;

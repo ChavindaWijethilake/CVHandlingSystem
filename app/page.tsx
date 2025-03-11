@@ -1,7 +1,9 @@
-import PatientForm from "@/components/forms/PatientForm";
+import Chatbot from "@/components/Chatbot";
+import LoginForm from "@/components/forms/LoginForm";
+
 import PasskeyModal from "@/components/PasskeyModal";
 
-import Image from "next/image";
+
 import Link from "next/link";
 
 export default function Home({ searchParams }: SearchParamProps) {
@@ -12,24 +14,10 @@ export default function Home({ searchParams }: SearchParamProps) {
       
      <section className="remove-scrollbar container my-auto">
         <div className="sub-container max-w-[496px]">
-          <Image
-            src="/assets/icons/logo-full.jpeg"
-            height={1000}
-            width={1000}
-            alt="patient"
-            className="mb-12 h-10 w-fit rounded-md"
-        />
 
-        <PatientForm />
+        <LoginForm />
+        <Chatbot/> 
 
-        <div className="text-14-regular mt-20 flex justify-between">
-          <p className="justify-items-end text-dark-600 xl:text-left">
-            ©  Ayuniya
-          </p>
-          <Link href="/?admin=true" className="text-green-500">
-            Admin
-          </Link>
-        </div>
       </div>
      </section>
 
